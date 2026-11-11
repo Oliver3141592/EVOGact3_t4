@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Citas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 30px;
+            background: #eef6f7;
+            color: #2c3e50;
+        }
+        h1 {
+            color: #0e7c86;
+            margin-top: 0;
+        }
+        a.btn {
+            display: inline-block;
+            padding: 8px 16px;
+            background: #0e7c86;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: bold;
+        }
+        a.btn:hover { background: #0a5c64; }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        th, td {
+            padding: 10px 12px;
+            text-align: left;
+        }
+        th {
+            background: #0e7c86;
+            color: white;
+        }
+        tbody tr:nth-child(even) { background: #f4fafa; }
+        tbody tr:hover { background: #d9eef0; }
+
+        .estado {
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.85em;
+            font-weight: bold;
+            color: white;
+        }
+        .PROGRAMADA { background: #2c7be5; }
+        .COMPLETADA { background: #27ae60; }
+        .CANCELADA  { background: #c0392b; }
+
+        a.edit { color: #0e7c86; font-weight: bold; text-decoration: none; }
+        a.edit:hover { text-decoration: underline; }
+        a.del  { color: #c0392b; font-weight: bold; text-decoration: none; }
+        a.del:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <h1>Registro de citas</h1>
+    <a class="btn" th:href="@{/nuevo}">+ Nueva cita</a>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Paciente</th>
+                <th>Fecha y hora</th>
+                <th>Motivo</th>
+                <th>Estado</th>
+                <th>Dentista</th>
+                <th>Especialidad</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="c : ${citas}">
+                <td th:text="${c.id}"></td>
+                <td th:text="${c.paciente}"></td>
+                <td th:text="${#temporals.format(c.fechaHora, 'dd/MM/yyyy HH:mm')}"></td>
+                <td th:text="${c.motivo}"></td>
+                <td>
+                    <span class="estado" th:classappend="${c.estado}" th:text="${c.estado}"></span>
+                </td>
+                <td th:text="${c.dentista.nombre}"></td>
+                <td th:text="${c.dentista.especialidad}"></td>
+                <td>
+                    <a class="edit" th:href="@{/editar/{id}(id=${c.id})}">Editar</a> |
+                    <a class="del" th:href="@{/eliminar/{id}(id=${c.id})}"
+                       onclick="return confirm('¿Eliminar esta cita?')">Eliminar</a>
+                </td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(citas)}">
+                <td colspan="8">No hay citas registradas.</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
