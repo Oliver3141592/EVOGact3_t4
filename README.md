@@ -38,10 +38,6 @@ Relación **uno a muchos**: un dentista tiene muchas citas, y cada cita pertenec
 <img width="1890" height="442" alt="image" src="https://github.com/user-attachments/assets/a164b0e1-3909-4bda-a476-4c70417be374" />
 
 
-## Persistencia en MySQL
-
-![Persistencia en MySQL](capturas/06-mysql.png)
-
 ## Configuración
 
 `application.properties` usa variables de entorno (`DB_URL`, `DB_USER`, `DB_PASSWORD`, `PORT`) con valores genéricos por defecto, sin credenciales reales.
